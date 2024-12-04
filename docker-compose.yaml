@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  mongo-3:
+    image: mongo:latest
+    container_name: mongo-3
+    ports:
+      - "28000:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  app-3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-3
+    depends_on:
+      - mongo-3
+    ports:
+      - "3001:3001"
+
+
+volumes:
+  mongo_data:
+
+networks:
+  default:
+    driver: bridge
